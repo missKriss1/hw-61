@@ -1,14 +1,14 @@
-import { ICoutryBlock } from '../../types';
+import { ICoutnryBlock } from '../../types';
 import * as React from 'react';
 
 interface CountryItem {
-  country: ICoutryBlock;
+  country: ICoutnryBlock;
+  onClick:  React.MouseEventHandler;
 }
-const CountryItem: React.FC <CountryItem> = ({country}) => {
+const CountryItem: React.FC <CountryItem> = ({country, onClick}) => {
   return (
-    <div>
-      <strong>{country.name}</strong>
-      <hr/>
+    <div onClick={onClick}>
+      <p>{country.name}</p>
     </div>
   );
 };
