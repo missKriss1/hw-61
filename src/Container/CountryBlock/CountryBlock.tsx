@@ -1,32 +1,38 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ICountry, ICoutnryBlock } from '../../types';
-import CountryItem from '../../Components/CountryItem/CountryItem.tsx';
-import { urlAllCountry, urlCodeCountry, urlNameCountry } from '../../constsnts.ts';
-import axios from 'axios';
-import DisplayDescCountry from '../../Components/DisplayDescCountry/DisplayDescCountry.tsx';
+import { useCallback, useEffect, useState } from "react";
+import { ICountry, ICoutnryBlock } from "../../types";
+import CountryItem from "../../Components/CountryItem/CountryItem.tsx";
+import {
+  urlAllCountry,
+  urlCodeCountry,
+  urlNameCountry,
+} from "../../constsnts.ts";
+import axios from "axios";
+import DisplayDescCountry from "../../Components/DisplayDescCountry/DisplayDescCountry.tsx";
 
 const CountryBlock = () => {
-
   const [countries, setCountries] = useState<ICoutnryBlock[]>([]);
   const [cliclCountry, setCliclCountry] = useState<null | string>(null);
 
   const fetchCountry = useCallback(async () => {
-    const response = await axios <ICoutnryBlock[]>(urlAllCountry + urlNameCountry);
-    const responseCount = response.data
+    const response = await axios<ICoutnryBlock[]>(
+      urlAllCountry + urlNameCountry,
+    );
+    const responseCount = response.data;
 
-    const promises = responseCount.map(async country =>{
-      const responseCountry =  await axios<ICountry>(urlAllCountry + urlCodeCountry + country.alpha3Code);
+    const promises = responseCount.map(async (country) => {
+      const responseCountry = await axios<ICountry>(
+        urlAllCountry + urlCodeCountry + country.alpha3Code,
+      );
       return responseCountry;
-    })
+    });
 
     const descriptionCountries = await Promise.all(promises);
-    setCountries(descriptionCountries.map(res => res.data));
-  }, [])
-
+    setCountries(descriptionCountries.map((res) => res.data));
+  }, []);
 
   useEffect(() => {
-    void fetchCountry()
-  },[fetchCountry])
+    void fetchCountry();
+  }, [fetchCountry]);
 
   return (
     <>
@@ -45,15 +51,14 @@ const CountryBlock = () => {
           <div className="mt-4 col-9">
             <p className="text-center">Unselcted country</p>
           </div>
-          ) :
-            <div className="ml-3 col-9">
-              <DisplayDescCountry alpha3Code={cliclCountry}/>
-            </div>
-            }
-
+        ) : (
+          <div className="ml-3 col-9">
+            <DisplayDescCountry alpha3Code={cliclCountry} />
           </div>
-          </>
-          );
-        };
+        )}
+      </div>
+    </>
+  );
+};
 
-        export default CountryBlock;
+export default CountryBlock;

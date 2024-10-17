@@ -1,9 +1,9 @@
-import CountryBlock from './Container/CountryBlock/CountryBlock.tsx';
+import CountryBlock from "./Container/CountryBlock/CountryBlock.tsx";
 
 const App = () => (
   <>
-    <CountryBlock/>
+    <CountryBlock />
   </>
 );
 
-export default App
+export default App;
